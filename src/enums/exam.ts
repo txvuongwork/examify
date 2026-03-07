@@ -1,0 +1,23 @@
+export enum EDifficultyLevel {
+  NHAN_BIET = "NHAN_BIET",
+  THONG_HIEU = "THONG_HIEU",
+  VAN_DUNG = "VAN_DUNG",
+  VAN_DUNG_CAO = "VAN_DUNG_CAO",
+}
+
+export enum EKnowledgeDomain {
+  HAM_SO = "HAM_SO",
+  MU_LOGARIT = "MU_LOGARIT",
+  NGUYEN_HAM_TICH_PHAN = "NGUYEN_HAM_TICH_PHAN",
+  SO_PHUC = "SO_PHUC",
+  HINH_HOC_KHONG_GIAN = "HINH_HOC_KHONG_GIAN",
+  XAC_SUAT_THONG_KE = "XAC_SUAT_THONG_KE",
+  TOAN_HOC_THUC_TE = "TOAN_HOC_THUC_TE",
+  TO_HOP_XAC_SUAT = "TO_HOP_XAC_SUAT",
+}
+
+export enum EExamPart {
+  I = "I",
+  II = "II",
+  III = "III",
+}
