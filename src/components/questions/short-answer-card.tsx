@@ -1,75 +1,63 @@
-import { Button } from "@/components/ui";
+import { cn } from "@/lib";
 import type { ShortAnswerQuestion } from "@/types";
-import { type FunctionComponent, useState } from "react";
-import { useTranslation } from "react-i18next";
+import type { FunctionComponent } from "react";
+import { useFormContext } from "react-hook-form";
 
 interface ShortAnswerCardProps {
   question: ShortAnswerQuestion;
+  isSubmitted: boolean;
 }
 
 export const ShortAnswerCard: FunctionComponent<ShortAnswerCardProps> = ({
   question,
+  isSubmitted,
 }) => {
-  const { t } = useTranslation();
-  const [answer, setAnswer] = useState("");
-  const [showResult, setShowResult] = useState(false);
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext();
+
+  const answer = (watch(question.id) ?? "") as string;
+  const hasError = !!errors[question.id];
 
   const isCorrect =
-    showResult &&
+    isSubmitted &&
     question.acceptedAnswers.some(
       (a) => a.toLowerCase() === answer.trim().toLowerCase(),
     );
 
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-      <div className="mb-1 flex items-center gap-2">
-        <span className="rounded-full bg-rose-100 px-3 py-0.5 text-xs font-semibold text-rose-700">
-          {t(`enum.examPart.${question.part}`)}
-        </span>
-        <span className="rounded-full bg-amber-100 px-3 py-0.5 text-xs font-semibold text-amber-700">
-          {t(`enum.difficultyLevel.${question.difficulty}`)}
-        </span>
-        <span className="rounded-full bg-emerald-100 px-3 py-0.5 text-xs font-semibold text-emerald-700">
-          {t(`enum.knowledgeDomain.${question.domain}`)}
-        </span>
-      </div>
-
-      <p className="mt-3 text-base font-medium text-zinc-900">
+    <div
+      className={cn(
+        "rounded-md border bg-white p-6 shadow-sm space-y-2",
+        hasError && !isSubmitted ? "border-red-300" : "border-zinc-200",
+      )}
+    >
+      <p className="text-lg font-bold text-zinc-900">
         {question.label} {question.stem}
       </p>
 
-      <div className="mt-4 flex items-center gap-3">
+      <div className="">
         <input
           type="text"
-          value={answer}
-          onChange={(e) => !showResult && setAnswer(e.target.value)}
+          {...register(question.id)}
+          disabled={isSubmitted}
           placeholder="Nhập đáp án..."
-          className={`flex-1 rounded-lg border px-4 py-2.5 text-sm outline-none transition-colors
-            ${showResult && isCorrect ? "border-green-500 bg-green-50" : ""}
-            ${showResult && !isCorrect ? "border-red-400 bg-red-50" : "border-zinc-300 focus:border-blue-500"}
+          className={`w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition-colors
+            ${isSubmitted && isCorrect ? "border-green-500 bg-green-50" : ""}
+            ${isSubmitted && !isCorrect ? "border-red-400 bg-red-50" : ""}
+            ${!isSubmitted && hasError ? "border-red-400" : ""}
+            ${!isSubmitted && !hasError ? "border-zinc-300 focus:border-blue-500" : ""}
           `}
         />
-        <Button
-          disabled={!answer.trim() || showResult}
-          onClick={() => setShowResult(true)}
-        >
-          Kiểm tra
-        </Button>
-        {showResult && (
-          <Button
-            variant="outline"
-            onClick={() => {
-              setAnswer("");
-              setShowResult(false);
-            }}
-          >
-            Làm lại
-          </Button>
+        {hasError && !isSubmitted && (
+          <p className="mt-1 text-sm text-red-500">Vui lòng nhập đáp án</p>
         )}
       </div>
 
-      {showResult && (
-        <div className="mt-3 rounded-lg bg-zinc-50 p-4 text-sm">
+      {isSubmitted && (
+        <div className="rounded-md bg-exp-bg text-exp-text border border-exp-border border-l-[3px] border-l-exp-accent p-4 text-sm">
           <p
             className={`font-semibold ${isCorrect ? "text-green-700" : "text-red-600"}`}
           >

@@ -1,89 +1,118 @@
-import { Button } from "@/components/ui";
-import type { TrueFalseQuestion } from "@/types";
-import { type FunctionComponent, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { cn } from "@/lib";
+import type { TrueFalseAnswerValue } from "@/schemas";
+import type { TrueFalseLabel, TrueFalseQuestion } from "@/types";
+import type { FunctionComponent } from "react";
+import { useFormContext } from "react-hook-form";
 
 interface TrueFalseCardProps {
   question: TrueFalseQuestion;
+  isSubmitted: boolean;
 }
 
 export const TrueFalseCard: FunctionComponent<TrueFalseCardProps> = ({
   question,
+  isSubmitted,
 }) => {
-  const { t } = useTranslation();
-  const [answers, setAnswers] = useState<Record<string, boolean | null>>({});
-  const [showResult, setShowResult] = useState(false);
+  const {
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
 
-  const allAnswered = question.items.every(
-    (item) => answers[item.label] != null,
-  );
+  const answers = (watch(question.id) ?? {}) as TrueFalseAnswerValue;
+  const hasError = !!errors[question.id];
 
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-      <div className="mb-1 flex items-center gap-2">
-        <span className="rounded-full bg-purple-100 px-3 py-0.5 text-xs font-semibold text-purple-700">
-          {t(`enum.examPart.${question.part}`)}
-        </span>
-        <span className="rounded-full bg-amber-100 px-3 py-0.5 text-xs font-semibold text-amber-700">
-          {t(`enum.difficultyLevel.${question.difficulty}`)}
-        </span>
-        <span className="rounded-full bg-emerald-100 px-3 py-0.5 text-xs font-semibold text-emerald-700">
-          {t(`enum.knowledgeDomain.${question.domain}`)}
-        </span>
-      </div>
-
-      <p className="mt-3 text-base font-medium text-zinc-900">
+    <div
+      className={cn(
+        "rounded-md border bg-white p-6 shadow-sm space-y-4",
+        hasError && !isSubmitted ? "border-red-300" : "border-zinc-200",
+      )}
+    >
+      <p className="text-lg font-bold text-zinc-900">
         {question.label} {question.stem}
       </p>
 
-      <p className="mt-2 rounded-lg bg-zinc-50 p-3 text-sm italic text-zinc-600">
+      <p className="rounded-md bg-gray-100 p-3 text-sm italic text-zinc-600 border border-gray-200 border-l-[3px] border-l-gray-300">
         {question.context}
       </p>
 
       <div className="mt-4 flex flex-col gap-3">
         {question.items.map((item) => {
-          const userAnswer = answers[item.label];
-          const isCorrect = showResult && userAnswer === item.isTrue;
-          const isWrong = showResult && userAnswer !== item.isTrue;
+          const userAnswer = answers[item.label as TrueFalseLabel];
+          const isCorrect = isSubmitted && userAnswer === item.isTrue;
+          const isWrong =
+            isSubmitted &&
+            (userAnswer === undefined || userAnswer !== item.isTrue);
 
           return (
             <div
               key={item.label}
-              className={`rounded-lg border p-4 transition-colors
-                ${isCorrect ? "border-green-300 bg-green-50" : ""}
-                ${isWrong ? "border-red-300 bg-red-50" : "border-zinc-200"}
-              `}
+              className={cn(
+                "rounded-md border transition-colors overflow-hidden border-zinc-200",
+                isCorrect ? "border-green-300 bg-green-50" : "",
+                isWrong ? "border-red-300 bg-red-50" : "",
+              )}
             >
-              <p className="text-sm text-zinc-800">
-                <span className="font-semibold">{item.label})</span>{" "}
-                {item.statement}
-              </p>
-              <div className="mt-2 flex gap-2">
+              <div className="flex items-center gap-3 text-sm transition-colors duration-300 p-3">
+                <span
+                  className={cn(
+                    "flex size-9 shrink-0 items-center justify-center rounded-md border text-sm font-bold transition-colors duration-300",
+                    "border-zinc-300 text-zinc-500 bg-zinc-100 uppercase",
+                    isCorrect ? "border-green-500 bg-green-500 text-white" : "",
+                    isWrong ? "border-red-400 bg-red-400 text-white" : "",
+                  )}
+                >
+                  {item.label}
+                </span>
+                <span>{item.statement}</span>
+              </div>
+              <div className="flex">
                 <button
+                  type="button"
                   onClick={() =>
-                    !showResult &&
-                    setAnswers((p) => ({ ...p, [item.label]: true }))
+                    !isSubmitted &&
+                    setValue(`${question.id}.${item.label}`, true, {
+                      shouldValidate: true,
+                    })
                   }
-                  className={`rounded-md border px-4 py-1.5 text-xs font-medium transition-colors
-                    ${userAnswer === true ? "border-blue-500 bg-blue-500 text-white" : "border-zinc-300 hover:bg-zinc-50"}
-                  `}
+                  className={cn(
+                    "bg-zinc-50 p-3 text-sm font-medium transition-colors flex-1 duration-300 border-t border-t-gray-300 cursor-pointer",
+                    userAnswer === true
+                      ? "border-blue-400 bg-blue-400 text-white"
+                      : "border-zinc-300 hover:bg-zinc-50",
+                    isSubmitted && "border-b",
+                  )}
                 >
                   Đúng
                 </button>
                 <button
+                  type="button"
                   onClick={() =>
-                    !showResult &&
-                    setAnswers((p) => ({ ...p, [item.label]: false }))
+                    !isSubmitted &&
+                    setValue(`${question.id}.${item.label}`, false, {
+                      shouldValidate: true,
+                    })
                   }
-                  className={`rounded-md border px-4 py-1.5 text-xs font-medium transition-colors
-                    ${userAnswer === false ? "border-blue-500 bg-blue-500 text-white" : "border-zinc-300 hover:bg-zinc-50"}
-                  `}
+                  className={cn(
+                    "bg-zinc-50 p-3 text-sm font-medium transition-colors flex-1 duration-300",
+                    "border-t border-t-zinc-200 border-l border-l-zinc-200 cursor-pointer",
+                    userAnswer === false
+                      ? "border-blue-400 bg-blue-400 text-white"
+                      : "border-zinc-300 hover:bg-zinc-50",
+                    isSubmitted && "border-b",
+                  )}
                 >
                   Sai
                 </button>
               </div>
-              {showResult && (
-                <p className="mt-2 text-xs text-zinc-600">
+              {isSubmitted && (
+                <p
+                  className={cn("text-sm p-3", {
+                    "text-red-500": isWrong,
+                    "text-green-500": isCorrect,
+                  })}
+                >
                   {item.explanation}
                 </p>
               )}
@@ -92,25 +121,11 @@ export const TrueFalseCard: FunctionComponent<TrueFalseCardProps> = ({
         })}
       </div>
 
-      <div className="mt-4 flex items-center gap-3">
-        <Button
-          disabled={!allAnswered || showResult}
-          onClick={() => setShowResult(true)}
-        >
-          Kiểm tra
-        </Button>
-        {showResult && (
-          <Button
-            variant="outline"
-            onClick={() => {
-              setAnswers({});
-              setShowResult(false);
-            }}
-          >
-            Làm lại
-          </Button>
-        )}
-      </div>
+      {hasError && !isSubmitted && (
+        <p className="mt-2 text-sm text-red-500">
+          Vui lòng trả lời tất cả các mệnh đề
+        </p>
+      )}
     </div>
   );
 };

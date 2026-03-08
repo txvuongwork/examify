@@ -50,6 +50,10 @@
   --color-navy: #1e2530;
   --color-gray: #4b5563;
   --color-gray-light: #e5e7eb;
+  --color-exp-bg: #fffef5;
+  --color-exp-border: #e8e0a0;
+  --color-exp-text: #3d3510;
+  --color-exp-accent: #b8a800;
 }
 
 :root {
