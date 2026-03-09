@@ -1,5 +1,11 @@
 export const vi = {
   translation: {
+    common: {
+      all: "Tất cả",
+      math: "Toán",
+      chemistry: "Hóa",
+      biology: "Sinh",
+    },
     enum: {
       difficultyLevel: {
         NHAN_BIET: "Nhận biết",
