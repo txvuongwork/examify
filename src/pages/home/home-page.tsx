@@ -1,7 +1,9 @@
 import biology from "@/assets/biology.png";
+import biologyBg from "@/assets/card/biology.png";
+import chemistryBg from "@/assets/card/chemistry.png";
+import mathBg from "@/assets/card/math.png";
 import chemistry from "@/assets/chemistry.png";
 import math from "@/assets/math.png";
-import { Header } from "@/components/layouts";
 import { BIOLOGY_EXAMS, CHEMISTRY_EXAMS, MATH_EXAMS } from "@/data";
 import { cn } from "@/lib";
 import type { Exam } from "@/types";
@@ -53,6 +55,18 @@ const SUBJECTS: SubjectTab[] = [
   },
 ];
 
+const BG_MAP = {
+  math: mathBg,
+  biology: biologyBg,
+  chemistry: chemistryBg,
+};
+
+const TEXT_COLOR_MAP = {
+  math: "bg-[#3B82F6]",
+  biology: "bg-[#F59E0B]",
+  chemistry: "bg-[#10B981]",
+};
+
 function ExamCard({ exam, subject }: { exam: Exam; subject: SubjectTab }) {
   const { metadata } = exam;
   const totalQuestions =
@@ -61,86 +75,19 @@ function ExamCard({ exam, subject }: { exam: Exam; subject: SubjectTab }) {
   return (
     <Link
       to={`/exam/${metadata.examCode}`}
-      className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] ring-1 ring-black/[0.04] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] hover:ring-black/[0.08] hover:-translate-y-0.5"
+      className="rounded-md overflow-hidden shadow-md border border-zinc-200/70"
     >
-      <div className={`h-1.5 bg-gradient-to-r ${subject.gradient}`} />
+      <div className="w-full flex justify-center items-center bg-white">
+        <img
+          src={BG_MAP[metadata.type]}
+          alt={subject.label}
+          className="w-2/3 object-cover"
+        />
+      </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start gap-3.5">
-          <img src={subject.icon} alt={subject.label} className="size-10" />
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <h3 className="truncate font-semibold text-zinc-900">
-                {metadata.subject}
-              </h3>
-              <span
-                className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${subject.accentBg} ${subject.accentText}`}
-              >
-                {metadata.year}
-              </span>
-            </div>
-            <p className="mt-0.5 text-[13px] text-zinc-500">
-              Mã đề {metadata.examCode}
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-4 flex items-center gap-4 text-[13px] text-zinc-400">
-          <div className="flex items-center gap-1.5">
-            <svg
-              className="size-4 text-zinc-300"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <span>{metadata.durationMinutes} phút</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <svg
-              className="size-4 text-zinc-300"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-              />
-            </svg>
-            <span>{totalQuestions} câu</span>
-          </div>
-        </div>
-
-        <div className="mt-5 flex items-center justify-between border-t border-zinc-100 pt-4">
-          <span className="text-xs text-zinc-400">{metadata.curriculum}</span>
-          <span
-            className={`inline-flex items-center gap-1 text-[13px] font-medium ${subject.accentText} transition-all duration-200 group-hover:gap-2`}
-          >
-            Làm bài
-            <svg
-              className="size-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-              />
-            </svg>
-          </span>
-        </div>
+      <div className={cn("p-4 text-white", TEXT_COLOR_MAP[metadata.type])}>
+        <h3 className="text-base font-bold text-white">{metadata.title}</h3>
+        <span>{totalQuestions} câu</span>
       </div>
     </Link>
   );
@@ -155,74 +102,68 @@ export const HomePage: FunctionComponent = () => {
     activeTab === "all" ? SUBJECTS : SUBJECTS.filter((s) => s.id === activeTab);
 
   return (
-    <div className="min-h-screen bg-main-bg">
-      <Header />
-
-      <main className="w-full max-w-5xl mx-auto px-4 pb-20">
-        <div className="flex items-center gap-2 py-4">
+    <div className="w-full max-w-5xl mx-auto px-4 h-[calc(100dvh-80px)] flex flex-col overflow-hidden">
+      <div className="flex items-center gap-2 py-4 shrink-0">
+        <button
+          type="button"
+          onClick={() => setActiveTab("all")}
+          className={cn(
+            "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer border border-zinc-200/70 shadow-sm",
+            activeTab === "all"
+              ? "bg-navy text-white shadow-sm"
+              : "bg-white text-zinc-600 hover:bg-zinc-50"
+          )}
+        >
+          {t("common.all")}
+        </button>
+        {SUBJECTS.map((subject) => (
           <button
+            key={subject.id}
             type="button"
-            onClick={() => setActiveTab("all")}
+            onClick={() =>
+              setActiveTab(activeTab === subject.id ? "all" : subject.id)
+            }
             className={cn(
-              "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center gap-2",
-              activeTab === "all"
+              "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 cursor-pointer flex items-center gap-2 border border-zinc-200/70 shadow-sm",
+              activeTab === subject.id
                 ? "bg-navy text-white shadow-sm"
-                : "bg-white text-zinc-600 hover:bg-zinc-50",
+                : "bg-white text-zinc-600 hover:bg-zinc-50"
             )}
           >
-            {t("common.all")}
+            <span>{t(`common.${subject.id}`)}</span>
           </button>
-          {SUBJECTS.map((subject) => (
-            <button
-              key={subject.id}
-              type="button"
-              onClick={() =>
-                setActiveTab(activeTab === subject.id ? "all" : subject.id)
-              }
-              className={cn(
-                "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 cursor-pointer flex items-center gap-2",
-                activeTab === subject.id
-                  ? "bg-navy text-white shadow-sm"
-                  : "bg-white text-zinc-600 hover:bg-zinc-50",
-              )}
-            >
-              <span>{t(`common.${subject.id}`)}</span>
-            </button>
-          ))}
-        </div>
+        ))}
+      </div>
 
-        {/* Exam grid */}
-        <div className="space-y-10">
-          {filteredSubjects.map((subject) => (
-            <section key={subject.id}>
-              {activeTab === "all" && (
-                <div className="mb-4 flex items-center gap-2">
-                  <div className="aspect-square rounded-full bg-white/90 p-1">
-                    <img
-                      src={subject.icon}
-                      alt={subject.label}
-                      className="size-8"
-                    />
-                  </div>
-                  <h2 className="text-base font-semibold text-zinc-800">
-                    {subject.label}
-                  </h2>
-                  <div className="h-px flex-1 bg-zinc-200/70" />
-                </div>
-              )}
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {subject.exams.map((exam) => (
-                  <ExamCard
-                    key={`${subject.id}-${exam.metadata.examCode}`}
-                    exam={exam}
-                    subject={subject}
+      <div className="space-y-10 flex-1 overflow-auto pb-4 thin-scrollbar">
+        {filteredSubjects.map((subject) => (
+          <section key={subject.id}>
+            {activeTab === "all" && (
+              <div className="mb-4 flex items-center gap-2">
+                <div className="aspect-square rounded-full bg-main-bg p-1 shadow-md">
+                  <img
+                    src={subject.icon}
+                    alt={subject.label}
+                    className="size-8"
                   />
-                ))}
+                </div>
+                <h2 className="text-base font-semibold text-zinc-800">
+                  {subject.label}
+                </h2>
               </div>
-            </section>
-          ))}
-        </div>
-      </main>
+            )}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {subject.exams.map((exam) => (
+                <ExamCard
+                  key={`${subject.id}-${exam.metadata.examCode}`}
+                  exam={exam}
+                  subject={subject}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   );
 };

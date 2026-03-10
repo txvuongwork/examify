@@ -54,7 +54,7 @@
   --color-exp-border: #e8e0a0;
   --color-exp-text: #3d3510;
   --color-exp-accent: #b8a800;
-  --color-main-bg: #f4f1eb;
+  --color-main-bg: #fdf6e3;
 }
 
 :root {
@@ -132,5 +132,36 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  @supports not selector(::-webkit-scrollbar) {
+    .thin-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: #c4c4c4 transparent;
+    }
+  }
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+    border-radius: 9999px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a3a3a3;
+  }
+  .thin-scrollbar::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  .thin-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
   }
 }

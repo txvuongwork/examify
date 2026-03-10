@@ -12,7 +12,8 @@ import type {
 // =============================================================================
 
 const EXAM_METADATA: ExamMetadata = {
-  title: "Kỳ Thi Tốt Nghiệp Trung Học Phổ Thông",
+  title: "Đề thi thử môn sinh học - Đề số 1",
+  type: "biology",
   subject: "Sinh học",
   examCode: "301",
   year: 2026,

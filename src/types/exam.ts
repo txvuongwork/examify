@@ -35,7 +35,7 @@ export interface MultipleChoiceQuestion extends BaseQuestion {
     MultipleChoiceOption & { label: "A" },
     MultipleChoiceOption & { label: "B" },
     MultipleChoiceOption & { label: "C" },
-    MultipleChoiceOption & { label: "D" },
+    MultipleChoiceOption & { label: "D" }
   ];
   correctAnswer: OptionLabel;
   explanation: string;
@@ -57,7 +57,7 @@ export interface TrueFalseQuestion extends BaseQuestion {
     TrueFalseItem & { label: "a" },
     TrueFalseItem & { label: "b" },
     TrueFalseItem & { label: "c" },
-    TrueFalseItem & { label: "d" },
+    TrueFalseItem & { label: "d" }
   ];
 }
 
@@ -79,6 +79,7 @@ export type ExamQuestion =
 
 export interface ExamMetadata {
   title: string;
+  type: "math" | "biology" | "chemistry";
   subject: string;
   examCode: string;
   year: number;

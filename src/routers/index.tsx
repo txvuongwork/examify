@@ -1,3 +1,4 @@
+import { MainLayout } from "@/components/layouts";
 import { ROUTES } from "@/config";
 import { ExamPage, HomePage } from "@/pages";
 import type { FunctionComponent } from "react";
@@ -7,11 +8,17 @@ import { RouterProvider } from "react-router/dom";
 const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
-    element: <HomePage />,
-  },
-  {
-    path: ROUTES.EXAM,
-    element: <ExamPage />,
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: ROUTES.EXAM,
+        element: <ExamPage />,
+      },
+    ],
   },
 ]);
 

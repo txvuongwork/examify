@@ -8,7 +8,8 @@ import type {
 } from "@/types";
 
 const EXAM_METADATA: ExamMetadata = {
-  title: "Kỳ Thi Tốt Nghiệp Trung Học Phổ Thông",
+  title: "Đề thi thử môn toán - Đề số 1",
+  type: "math",
   subject: "Toán",
   examCode: "101",
   year: 2026,
