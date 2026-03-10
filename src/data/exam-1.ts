@@ -16,6 +16,7 @@ import type {
 
 export const EXAM_METADATA: ExamMetadata = {
   title: "Kỳ Thi Tốt Nghiệp Trung Học Phổ Thông",
+  type: "math",
   subject: "Toán",
   examCode: "101",
   year: 2026,
@@ -616,17 +617,17 @@ export function isShortAnswer(q: ExamQuestion): q is ShortAnswerQuestion {
 /** Get all questions belonging to a specific part */
 export function getQuestionsByPart<P extends EExamPart>(
   exam: Exam,
-  part: P,
+  part: P
 ): Extract<ExamQuestion, { part: P }>[] {
   return exam.questions.filter(
-    (q): q is Extract<ExamQuestion, { part: P }> => q.part === part,
+    (q): q is Extract<ExamQuestion, { part: P }> => q.part === part
   );
 }
 
 /** Get a question by its ID (type-safe return) */
 export function getQuestionById(
   exam: Exam,
-  id: string,
+  id: string
 ): ExamQuestion | undefined {
   return exam.questions.find((q) => q.id === id);
 }
@@ -634,7 +635,7 @@ export function getQuestionById(
 /** Get all questions at a given difficulty level */
 export function getQuestionsByDifficulty(
   exam: Exam,
-  level: EDifficultyLevel,
+  level: EDifficultyLevel
 ): ExamQuestion[] {
   return exam.questions.filter((q) => q.difficulty === level);
 }
@@ -647,7 +648,7 @@ export function getAppliedQuestions(exam: Exam): ExamQuestion[] {
 /** Check a multiple-choice answer (type-safe) */
 export function checkMultipleChoice(
   question: MultipleChoiceQuestion,
-  userAnswer: OptionLabel,
+  userAnswer: OptionLabel
 ): boolean {
   return question.correctAnswer === userAnswer;
 }
@@ -655,29 +656,29 @@ export function checkMultipleChoice(
 /** Check a short-answer response against all accepted answers */
 export function checkShortAnswer(
   question: ShortAnswerQuestion,
-  userAnswer: string,
+  userAnswer: string
 ): boolean {
   const normalized = userAnswer.trim().toLowerCase();
   return question.acceptedAnswers.some(
-    (ans) => ans.toLowerCase() === normalized,
+    (ans) => ans.toLowerCase() === normalized
   );
 }
 
 /** Grade a true/false question: returns number of correct sub-items (0–4) */
 export function gradeTrueFalse(
   question: TrueFalseQuestion,
-  userAnswers: Record<TrueFalseLabel, boolean>,
+  userAnswers: Record<TrueFalseLabel, boolean>
 ): number {
   return question.items.reduce(
     (score, item) =>
       userAnswers[item.label] === item.isTrue ? score + 1 : score,
-    0,
+    0
   );
 }
 
 /** Summarise difficulty distribution across the exam */
 export function getDifficultyDistribution(
-  exam: Exam,
+  exam: Exam
 ): Record<EDifficultyLevel, number> {
   const dist = {} as Record<EDifficultyLevel, number>;
   for (const level of Object.values(EDifficultyLevel)) dist[level] = 0;
@@ -687,7 +688,7 @@ export function getDifficultyDistribution(
 
 /** Summarise knowledge domain distribution */
 export function getDomainDistribution(
-  exam: Exam,
+  exam: Exam
 ): Record<EKnowledgeDomain, number> {
   const dist = {} as Record<EKnowledgeDomain, number>;
   for (const d of Object.values(EKnowledgeDomain)) dist[d] = 0;
