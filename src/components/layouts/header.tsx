@@ -5,8 +5,8 @@ import { Link } from "react-router";
 
 export const Header: FunctionComponent = () => {
   return (
-    <header className="w-full sticky top-0 bg-main-bg z-20 shadow-sm">
-      <div className="mx-auto py-4 max-w-5xl flex items-center gap-2">
+    <header className="w-full sticky top-0 bg-white z-20 shadow-sm">
+      <div className="mx-auto h-20 max-w-5xl flex items-center gap-2 px-4">
         <Link to={ROUTES.HOME} className="flex flex-col justify-center gap-1">
           <img src={logo} alt="logo" className="size-12" />
         </Link>

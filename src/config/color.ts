@@ -10,4 +10,5 @@ export const PAPER_COLORS: readonly TPaperColor[] = [
   { name: "Vàng nhạt", bg: "#fdf6e3", grid: "#d4c9a8" },
   { name: "Hồng nhạt", bg: "#fdf2f2", grid: "#d4b8b8" },
   { name: "Xanh lá nhạt", bg: "#f2f8f0", grid: "#b0c8a8" },
+  { name: "Xám nhạt", bg: "#f2f8f0", grid: "#f3f4f6" },
 ] as const;

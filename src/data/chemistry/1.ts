@@ -1,4 +1,9 @@
-import { EDifficultyLevel, EExamPart, EKnowledgeDomain } from "@/enums";
+import {
+  EDifficultyLevel,
+  EExamPart,
+  EExamSubject,
+  EKnowledgeDomain,
+} from "@/enums";
 import type {
   Exam,
   ExamMetadata,
@@ -13,8 +18,7 @@ import type {
 
 const EXAM_METADATA: ExamMetadata = {
   title: "Đề thi thử môn hóa học - Đề số 1",
-  type: "chemistry",
-  subject: "Hoá học",
+  subject: EExamSubject.CHEMISTRY,
   examCode: "0401",
   year: 2026,
   curriculum: "GDPT 2018",
@@ -603,17 +607,18 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     part: EExamPart.III,
     label: "Câu 3.",
     type: "short_answer",
-    stem: "Đốt cháy 3,0 g amine X (no, đơn chức, mạch hở). Dẫn sản phẩm qua NaOH dư, bình tăng 8,04 g. Số C trong X?",
+    stem: "Đốt cháy 4,5 g amine X (no, đơn chức, mạch hở). Dẫn toàn bộ sản phẩm qua bình đựng NaOH dư, thấy khối lượng bình tăng 15,1 g. Số nguyên tử Carbon trong phân tử X là bao nhiêu?",
     difficulty: EDifficultyLevel.VAN_DUNG_CAO,
     domain: EKnowledgeDomain.AMINE_AMINO_ACID_PROTEIN,
     isApplied: false,
     acceptedAnswers: ["2"],
     solutionSteps: [
-      "CₙH₂ₙ₊₃N, M = 14n+17. a(14n+17) = 3 … (1)",
-      "m(CO₂)+m(H₂O) = a(62n+27) = 8,04 … (2)",
-      "Từ (1)(2): 3(62n+27)/(14n+17) = 8,04 → n = 2.",
+      "Gọi CTPT của X là CₙH₂ₙ₊₃N (a mol). M = 14n + 17. Phương trình (1): a(14n + 17) = 4,5",
+      "Đốt cháy thu được n mol CO₂ và (n+1,5) mol H₂O.",
+      "Khối lượng bình tăng: m(CO₂) + m(H₂O) = a[44n + 18(n+1,5)] = a(62n + 27) = 15,1 ... (2)",
+      "Lập tỉ lệ (2)/(1): (62n + 27) / (14n + 17) = 15,1 / 4,5. Giải ra n = 2.",
     ],
-    conclusion: "Số C = 2 (C₂H₇N).",
+    conclusion: "Số C = 2 (Công thức: C₂H₇N).",
   },
   {
     id: "P3_Q26",

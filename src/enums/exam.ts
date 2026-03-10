@@ -46,3 +46,9 @@ export enum EExamPart {
   II = "II",
   III = "III",
 }
+
+export enum EExamSubject {
+  MATH = "MATH",
+  CHEMISTRY = "CHEMISTRY",
+  BIOLOGY = "BIOLOGY",
+}

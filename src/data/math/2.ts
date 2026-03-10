@@ -1,4 +1,9 @@
-import { EDifficultyLevel, EExamPart, EKnowledgeDomain } from "@/enums";
+import {
+  EDifficultyLevel,
+  EExamPart,
+  EExamSubject,
+  EKnowledgeDomain,
+} from "@/enums";
 import type {
   Exam,
   ExamMetadata,
@@ -9,8 +14,7 @@ import type {
 
 const EXAM_METADATA: ExamMetadata = {
   title: "Đề thi thử môn toán - Đề số 2",
-  type: "math",
-  subject: "Toán",
+  subject: EExamSubject.MATH,
   examCode: "102",
   year: 2026,
   curriculum: "GDPT 2018",

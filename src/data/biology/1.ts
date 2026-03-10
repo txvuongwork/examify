@@ -1,4 +1,9 @@
-import { EDifficultyLevel, EExamPart, EKnowledgeDomain } from "@/enums";
+import {
+  EDifficultyLevel,
+  EExamPart,
+  EExamSubject,
+  EKnowledgeDomain,
+} from "@/enums";
 import type {
   Exam,
   ExamMetadata,
@@ -13,8 +18,7 @@ import type {
 
 const EXAM_METADATA: ExamMetadata = {
   title: "Đề thi thử môn sinh học - Đề số 1",
-  type: "biology",
-  subject: "Sinh học",
+  subject: EExamSubject.BIOLOGY,
   examCode: "301",
   year: 2026,
   curriculum: "GDPT 2018",

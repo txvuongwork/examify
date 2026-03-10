@@ -35,7 +35,7 @@ const LargeGrid: FunctionComponent<LargeGridProps> = ({
 export const Background: FunctionComponent = () => {
   return (
     <div className="fixed inset-0 z-[-1]">
-      <LargeGrid size={32} color={PAPER_COLORS[4].grid} />
+      <LargeGrid size={40} color={PAPER_COLORS[5].grid} />
     </div>
   );
 };

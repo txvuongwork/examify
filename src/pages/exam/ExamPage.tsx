@@ -1,10 +1,9 @@
+import { QuestionNav } from "@/components/question-nav";
 import {
   MultipleChoiceCard,
   ShortAnswerCard,
   TrueFalseCard,
 } from "@/components/questions";
-import { QuestionNav } from "@/components/question-nav";
-import { isQuestionAnswered } from "@/lib";
 import { Button } from "@/components/ui";
 import {
   AlertDialog,
@@ -16,20 +15,29 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { EXAM, getQuestionsByPart } from "@/data/exam-1";
-import { EExamPart } from "@/enums";
+import { EXAM_MAP } from "@/data";
+import { EExamPart, EExamSubject } from "@/enums";
+import { isQuestionAnswered } from "@/lib";
+import { LoadingPage } from "@/pages/loading-page";
 import { createExamDefaultValues, createExamFormSchema } from "@/schemas";
+import type { Exam } from "@/types";
+import { getQuestionsByPart } from "@/utils/exam";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type FunctionComponent, useMemo, useState } from "react";
+import { type FunctionComponent, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useParams } from "react-router";
 
-export const ExamPage: FunctionComponent = () => {
+interface ExamFormProps {
+  exam: Exam;
+}
+
+const ExamForm: FunctionComponent<ExamFormProps> = ({ exam }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [unansweredCount, setUnansweredCount] = useState(0);
 
-  const schema = useMemo(() => createExamFormSchema(EXAM), []);
-  const defaultValues = useMemo(() => createExamDefaultValues(EXAM), []);
+  const schema = useMemo(() => createExamFormSchema(exam), [exam]);
+  const defaultValues = useMemo(() => createExamDefaultValues(exam), [exam]);
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -38,7 +46,7 @@ export const ExamPage: FunctionComponent = () => {
 
   const handleSubmit = () => {
     const values = form.getValues();
-    const count = EXAM.questions.filter(
+    const count = exam.questions.filter(
       (q) => !isQuestionAnswered(q, values[q.id]),
     ).length;
 
@@ -60,28 +68,23 @@ export const ExamPage: FunctionComponent = () => {
     setIsSubmitted(false);
   };
 
-  const partI = getQuestionsByPart(EXAM, EExamPart.I);
-  const partII = getQuestionsByPart(EXAM, EExamPart.II);
-  const partIII = getQuestionsByPart(EXAM, EExamPart.III);
+  const partI = getQuestionsByPart(exam, EExamPart.I);
+  const partII = getQuestionsByPart(exam, EExamPart.II);
+  const partIII = getQuestionsByPart(exam, EExamPart.III);
 
   return (
-    <main className="min-h-screen bg-zinc-50">
+    <div className="bg-zinc-50 w-full">
       <FormProvider {...form}>
-        <form className="mx-auto max-w-5xl px-4 py-8">
-          <h2 className="text-xl font-bold text-zinc-800">
-            {EXAM.metadata.title} – {EXAM.metadata.subject} (Mã đề{" "}
-            {EXAM.metadata.examCode})
-          </h2>
-
-          <div className="mt-8 flex gap-6">
+        <form className="mx-auto max-w-5xl px-4 py-4">
+          <div className="flex gap-6">
             <div className="min-w-0 flex-1 space-y-8">
               <section className="space-y-4">
                 <div>
                   <h3 className="text-lg font-semibold text-zinc-800">
-                    Phần I. {EXAM.metadata.parts[EExamPart.I].label}
+                    Phần I. {exam.metadata.parts[EExamPart.I].label}
                   </h3>
                   <p className="text-sm text-zinc-500">
-                    {EXAM.metadata.parts[EExamPart.I].instructions}
+                    {exam.metadata.parts[EExamPart.I].instructions}
                   </p>
                 </div>
                 {partI.map((q) => (
@@ -97,10 +100,10 @@ export const ExamPage: FunctionComponent = () => {
               <section className="space-y-4">
                 <div>
                   <h3 className="text-lg font-semibold text-zinc-800">
-                    Phần II. {EXAM.metadata.parts[EExamPart.II].label}
+                    Phần II. {exam.metadata.parts[EExamPart.II].label}
                   </h3>
                   <p className="text-sm text-zinc-500">
-                    {EXAM.metadata.parts[EExamPart.II].instructions}
+                    {exam.metadata.parts[EExamPart.II].instructions}
                   </p>
                 </div>
                 {partII.map((q) => (
@@ -110,13 +113,13 @@ export const ExamPage: FunctionComponent = () => {
                 ))}
               </section>
 
-              <section className="space-y-4">
+              <section className="space-y-4 mb-0">
                 <div>
                   <h3 className="text-lg font-semibold text-zinc-800">
-                    Phần III. {EXAM.metadata.parts[EExamPart.III].label}
+                    Phần III. {exam.metadata.parts[EExamPart.III].label}
                   </h3>
                   <p className="text-sm text-zinc-500">
-                    {EXAM.metadata.parts[EExamPart.III].instructions}
+                    {exam.metadata.parts[EExamPart.III].instructions}
                   </p>
                 </div>
                 {partIII.map((q) => (
@@ -149,12 +152,13 @@ export const ExamPage: FunctionComponent = () => {
             </div>
 
             <aside className="hidden shrink-0 lg:block">
-              <div className="sticky top-8">
+              <div className="sticky top-28">
                 <QuestionNav
-                  questions={EXAM.questions}
+                  questions={exam.questions}
                   isSubmitted={isSubmitted}
                   onSubmit={handleSubmit}
                   onReset={handleReset}
+                  title={exam.metadata.title}
                 />
               </div>
             </aside>
@@ -179,6 +183,30 @@ export const ExamPage: FunctionComponent = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </main>
+    </div>
   );
+};
+
+interface ExamPageProps {
+  subject: EExamSubject;
+}
+
+export const ExamPage: FunctionComponent<ExamPageProps> = ({ subject }) => {
+  const { id } = useParams();
+
+  const [isLoading, setLoading] = useState<boolean>(true);
+
+  const exam = useMemo(
+    () => EXAM_MAP[subject].find((e) => e.metadata.examCode === id),
+    [id, subject],
+  );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  }, []);
+
+  if (!exam || isLoading) return <LoadingPage />;
+  return <ExamForm exam={exam} />;
 };

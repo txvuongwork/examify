@@ -1,3 +1,5 @@
+import { EExamSubject } from "@/enums";
+
 export const vi = {
   translation: {
     common: {
@@ -5,7 +7,14 @@ export const vi = {
       math: "Toán",
       chemistry: "Hóa",
       biology: "Sinh",
+      questions: "{{count}} câu",
+      exams: "{{count}} đề",
     },
+    subject: {
+      [EExamSubject.MATH]: "Toán",
+      [EExamSubject.CHEMISTRY]: "Hóa",
+      [EExamSubject.BIOLOGY]: "Sinh",
+    } as Record<EExamSubject, string>,
     enum: {
       difficultyLevel: {
         NHAN_BIET: "Nhận biết",
