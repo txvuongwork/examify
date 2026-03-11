@@ -41,10 +41,6 @@ const EXAM_METADATA: ExamMetadata = {
   },
 } as const;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PART I QUESTIONS (Q1–Q12)
-// ─────────────────────────────────────────────────────────────────────────────
-
 const partIQuestions: readonly MultipleChoiceQuestion[] = [
   {
     id: "P1_Q1",
@@ -98,12 +94,12 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     domain: EKnowledgeDomain.HAM_SO,
     isApplied: false,
     options: [
-      { label: "A", text: "–5" },
+      { label: "A", text: "4" },
       { label: "B", text: "0" },
-      { label: "C", text: "4" },
+      { label: "C", text: "–5" },
       { label: "D", text: "5" },
     ] as const,
-    correctAnswer: "C",
+    correctAnswer: "A",
     explanation: "y' = –2x + 4 = 0 → x = 2. y(0)=0, y(2)=4, y(5)=–5. Max = 4.",
   },
   {
@@ -137,12 +133,12 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     domain: EKnowledgeDomain.MU_LOGARIT,
     isApplied: false,
     options: [
-      { label: "A", text: "2" },
+      { label: "A", text: "4" },
       { label: "B", text: "2√2" },
-      { label: "C", text: "4" },
+      { label: "C", text: "2" },
       { label: "D", text: "8" },
     ] as const,
-    correctAnswer: "C",
+    correctAnswer: "A",
     explanation: "P = 2^(3/2 + 1/2) = 2^2 = 4.",
   },
   {
@@ -175,12 +171,12 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     domain: EKnowledgeDomain.NGUYEN_HAM_TICH_PHAN,
     isApplied: false,
     options: [
-      { label: "A", text: "e + 1" },
+      { label: "A", text: "e + 3" },
       { label: "B", text: "e + 2" },
-      { label: "C", text: "e + 3" },
+      { label: "C", text: "e + 1" },
       { label: "D", text: "2e + 1" },
     ] as const,
-    correctAnswer: "C",
+    correctAnswer: "A",
     explanation:
       "F(x) = eˣ + x² + C. F(0) = 1 + 0 + C = 3 → C = 2. F(1) = e + 1 + 2 = e + 3.",
   },
@@ -284,10 +280,6 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
   },
 ] as const;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PART II QUESTIONS (Q13–Q16)
-// ─────────────────────────────────────────────────────────────────────────────
-
 const partIIQuestions: readonly TrueFalseQuestion[] = [
   {
     id: "P2_Q13",
@@ -352,9 +344,12 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
       },
       {
         label: "b",
-        statement: "Hàm số A(n) = 100·(1,06)ⁿ là hàm đồng biến theo n.",
-        isTrue: true,
-        explanation: "Cơ số 1,06 > 1 → hàm mũ luôn đồng biến. ✓",
+        statement:
+          "Sau 5 năm, số tiền lãi (không tính gốc) anh Nam nhận được là 30 triệu đồng.",
+        isTrue: false,
+        explanation:
+          "Tiền lãi sau 5 năm = A(5) – 100 = 100·(1,06)⁵ – 100 ≈ 100·1,3382 – 100 ≈ 33,82 triệu. " +
+          "Bẫy: HS nhầm lãi đơn 6%×5 = 30%, tức 30 triệu. Nhưng lãi kép cho kết quả lớn hơn.",
       },
       {
         label: "c",
@@ -430,9 +425,11 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
     items: [
       {
         label: "a",
-        statement: "AC = 5 cm.",
-        isTrue: true,
-        explanation: "Pythagore: AC = √(AB² + BC²) = √(9+16) = √25 = 5 cm. ✓",
+        statement: "Độ dài đoạn thẳng SC = 5√2 cm.",
+        isTrue: false,
+        explanation:
+          "SA ⊥ AC nên SC = √(SA²+AC²) = √(36+25) = √61 cm ≈ 7,81 cm. " +
+          "5√2 ≈ 7,07 cm ≠ √61. Kết quả sai.",
       },
       {
         label: "b",
@@ -451,19 +448,13 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
       },
       {
         label: "d",
-        statement: "Độ dài đoạn thẳng SC = 5√2 cm.",
-        isTrue: false,
-        explanation:
-          "SA ⊥ AC nên SC = √(SA²+AC²) = √(36+25) = √61 cm ≈ 7,81 cm. " +
-          "5√2 ≈ 7,07 cm ≠ √61. Kết quả sai.",
+        statement: "AC = 5 cm.",
+        isTrue: true,
+        explanation: "Pythagore: AC = √(AB² + BC²) = √(9+16) = √25 = 5 cm. ✓",
       },
     ] as const,
   },
 ] as const;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PART III QUESTIONS (Q17–Q22)
-// ─────────────────────────────────────────────────────────────────────────────
 
 const partIIIQuestions: readonly ShortAnswerQuestion[] = [
   {
@@ -473,10 +464,10 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     label: "Câu 17.",
     type: "short_answer",
     stem: "Tính tổng tất cả các nghiệm của phương trình 4ˣ – 5·2ˣ + 4 = 0.",
-    difficulty: EDifficultyLevel.VAN_DUNG,
+    difficulty: EDifficultyLevel.VAN_DUNG_CAO,
     domain: EKnowledgeDomain.MU_LOGARIT,
     isApplied: false,
-    acceptedAnswers: ["2"],
+    acceptedAnswers: ["2", "2.0"],
     solutionSteps: [
       "Đặt t = 2ˣ (t > 0). Vì 4ˣ = (2ˣ)² = t², phương trình trở thành: t² – 5t + 4 = 0.",
       "Phân tích: (t–1)(t–4) = 0 → t = 1 hoặc t = 4.",
@@ -528,17 +519,18 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     part: EExamPart.III,
     label: "Câu 20.",
     type: "short_answer",
-    stem: "Trong không gian Oxyz, cho ba điểm A(1; 0; 0), B(0; 2; 0), C(0; 0; 3). Tính khoảng cách từ gốc tọa độ O đến mặt phẳng (ABC).",
-    difficulty: EDifficultyLevel.VAN_DUNG,
+    stem: "Trong không gian Oxyz, cho mặt phẳng (P): x/1 + y/2 + z/3 = 1. Điểm M(a; a; a) thuộc (P). Tính khoảng cách từ điểm N(2a; 0; 0) đến mặt phẳng (P).",
+    difficulty: EDifficultyLevel.VAN_DUNG_CAO,
     domain: EKnowledgeDomain.HINH_HOC_KHONG_GIAN,
     isApplied: false,
-    acceptedAnswers: ["6/7"],
+    acceptedAnswers: ["6/77", "0.078"],
     solutionSteps: [
-      "Phương trình mp(ABC) dạng chắn: x/1 + y/2 + z/3 = 1.",
-      "Nhân với 6: 6x + 3y + 2z – 6 = 0.",
-      "d(O, mp) = |6·0 + 3·0 + 2·0 – 6| / √(6² + 3² + 2²) = 6 / √49 = 6/7.",
+      "M(a;a;a) ∈ (P): a/1 + a/2 + a/3 = 1 → a(1 + 1/2 + 1/3) = 1 → a·(11/6) = 1 → a = 6/11.",
+      "N(2a; 0; 0) = N(12/11; 0; 0).",
+      "(P): 6x + 3y + 2z – 6 = 0.",
+      "d(N, (P)) = |6·(12/11) + 3·0 + 2·0 – 6| / √(36+9+4) = |72/11 – 66/11| / 7 = (6/11) / 7 = 6/77.",
     ],
-    conclusion: "Khoảng cách từ O đến mặt phẳng (ABC) là 6/7.",
+    conclusion: "Khoảng cách từ N đến (P) là 6/77.",
   },
   {
     id: "P3_Q21",
@@ -550,7 +542,7 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     difficulty: EDifficultyLevel.VAN_DUNG,
     domain: EKnowledgeDomain.XAC_SUAT_THONG_KE,
     isApplied: true,
-    acceptedAnswers: ["13/256"],
+    acceptedAnswers: ["13/256", "0.0508"],
     solutionSteps: [
       "Nhận dạng mô hình: X ~ B(4, 1/4) với p = 1/4, q = 3/4.",
       "P(X=3) = C(4,3)·(1/4)³·(3/4)¹ = 4·(1/64)·(3/4) = 12/256.",

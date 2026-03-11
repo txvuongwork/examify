@@ -75,12 +75,12 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     domain: EKnowledgeDomain.HAM_SO,
     isApplied: false,
     options: [
-      { label: "A", text: "1" },
+      { label: "A", text: "3" },
       { label: "B", text: "2" },
-      { label: "C", text: "3" },
+      { label: "C", text: "1" },
       { label: "D", text: "4" },
     ] as const,
-    correctAnswer: "C",
+    correctAnswer: "A",
     explanation:
       "y' = 4x³ – 16x = 4x(x² – 4) = 4x(x – 2)(x + 2). " +
       "y' = 0 tại x = –2, x = 0, x = 2. " +
@@ -260,7 +260,7 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     label: "Câu 11.",
     type: "multiple_choice",
     stem: "Có bao nhiêu cách xếp 6 học sinh thành một hàng ngang?",
-    difficulty: EDifficultyLevel.THONG_HIEU,
+    difficulty: EDifficultyLevel.NHAN_BIET,
     domain: EKnowledgeDomain.TO_HOP_XAC_SUAT,
     isApplied: false,
     options: [
@@ -295,10 +295,6 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
       "P(ít nhất 1 nữ) = 1 – 56/455 = 399/455 = 57/65.",
   },
 ] as const;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PART II QUESTIONS (Q13–Q16)
-// ─────────────────────────────────────────────────────────────────────────────
 
 const partIIQuestions: readonly TrueFalseQuestion[] = [
   {
@@ -365,9 +361,11 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
       {
         label: "a",
         statement:
-          "Sau 5 năm (năm 2025), dân số thành phố xấp xỉ 2,208 triệu người.",
-        isTrue: true,
-        explanation: "P(5) = 2·(1,02)⁵ ≈ 2 × 1,1041 ≈ 2,208 triệu người. ✓",
+          "Sau 5 năm (năm 2025), dân số thành phố tăng thêm xấp xỉ 2,208 triệu người.",
+        isTrue: false,
+        explanation:
+          "P(5) = 2·(1,02)⁵ ≈ 2,208 triệu người là *tổng dân số* tại năm đó. " +
+          "Số dân *tăng thêm* chỉ là 2,208 – 2 = 0,208 triệu người. ✗",
       },
       {
         label: "b",
@@ -381,16 +379,17 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
           "Số năm tối thiểu để dân số tăng gấp đôi (đạt 4 triệu người) là 35 năm.",
         isTrue: false,
         explanation:
-          "Cần (1,02)ⁿ ≥ 2 → n ≥ ln2/ln(1,02) ≈ 0,6931/0,01980 ≈ 35,003. " +
-          "(1,02)³⁵ ≈ 1,9999 < 2; (1,02)³⁶ ≈ 2,040 > 2. " +
-          "Số năm tối thiểu là 36 (không phải 35). ✗",
+          "Cần (1,02)ⁿ ≥ 2 → n ≥ ln2/ln(1,02) ≈ 35,003. " +
+          "Vì n là số nguyên, số năm tối thiểu phải làm tròn lên là 36 (không phải 35). ✗",
       },
       {
         label: "d",
         statement:
-          "Nếu tỷ lệ tăng tăng lên 3%/năm, sau 10 năm dân số thành phố vượt 2,6 triệu người.",
-        isTrue: true,
-        explanation: "2·(1,03)¹⁰ ≈ 2 × 1,3439 ≈ 2,688 triệu > 2,6 triệu. ✓",
+          "Nếu tỷ lệ tăng là 3%/năm, mô hình dân số sẽ là P(n) = 2·(1,3)ⁿ triệu người.",
+        isTrue: false,
+        explanation:
+          "Tỷ lệ 3% tương ứng với hệ số nhân là 1 + 3% = 1,03. " +
+          "Mô hình đúng phải là P(n) = 2·(1,03)ⁿ. Việc dùng 1,3 tương đương với mức tăng 30%. ✗",
       },
     ] as const,
   },
@@ -455,19 +454,19 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
     items: [
       {
         label: "a",
-        statement: "Vectơ pháp tuyến của mặt phẳng (α) là n⃗ = (2; –1; 2).",
-        isTrue: true,
+        statement: "Vectơ pháp tuyến của mặt phẳng (α) là n⃗ = (2; 1; 2).",
+        isTrue: false,
         explanation:
-          "Phương trình ax + by + cz + d = 0 có vectơ pháp tuyến (a; b; c). " +
-          "Với (α): 2x – y + 2z – 6 = 0 → n⃗ = (2; –1; 2). ✓",
+          "Phương trình 2x – y + 2z – 6 = 0 có hệ số của y là –1. " +
+          "Vectơ pháp tuyến đúng phải là n⃗ = (2; –1; 2). ✗",
       },
       {
         label: "b",
-        statement:
-          "Khoảng cách từ gốc tọa độ O(0; 0; 0) đến mặt phẳng (α) bằng 2.",
-        isTrue: true,
+        statement: "Mặt phẳng (α) đi qua gốc tọa độ O(0; 0; 0).",
+        isTrue: false,
         explanation:
-          "d(O, α) = |2·0 – 1·0 + 2·0 – 6| / √(4 + 1 + 4) = 6/3 = 2. ✓",
+          "Thay O(0; 0; 0) vào phương trình (α) ta được –6 = 0 (vô lý). " +
+          "Hoặc nhìn nhanh hệ số tự do d = –6 ≠ 0 nên (α) không đi qua gốc O. ✗",
       },
       {
         label: "c",
@@ -489,10 +488,6 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
     ] as const,
   },
 ] as const;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PART III QUESTIONS (Q17–Q22)
-// ─────────────────────────────────────────────────────────────────────────────
 
 const partIIIQuestions: readonly ShortAnswerQuestion[] = [
   {
@@ -522,7 +517,7 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     label: "Câu 18.",
     type: "short_answer",
     stem: "Tính tích phân I = ∫₀¹ x·eˣ dx.",
-    difficulty: EDifficultyLevel.THONG_HIEU,
+    difficulty: EDifficultyLevel.VAN_DUNG,
     domain: EKnowledgeDomain.NGUYEN_HAM_TICH_PHAN,
     isApplied: false,
     acceptedAnswers: ["1"],
