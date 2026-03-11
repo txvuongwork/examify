@@ -12,10 +12,6 @@ import type {
   TrueFalseQuestion,
 } from "@/types";
 
-// =============================================================================
-// DATA
-// =============================================================================
-
 const EXAM_METADATA: ExamMetadata = {
   title: "Đề thi thử môn hóa học - Đề số 1",
   subject: EExamSubject.CHEMISTRY,
@@ -34,20 +30,16 @@ const EXAM_METADATA: ExamMetadata = {
       label: "Trắc nghiệm Đúng/Sai",
       count: 4,
       instructions:
-        "Thí sinh trả lời từ câu 1 đến câu 4. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn đúng hoặc sai.",
+        "Thí sinh trả lời từ câu 19 đến câu 22. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn đúng hoặc sai.",
     },
     [EExamPart.III]: {
       label: "Trắc nghiệm trả lời ngắn",
       count: 6,
       instructions:
-        "Thí sinh trả lời từ câu 1 đến câu 6. Thí sinh tính toán và ghi kết quả vào phiếu trả lời.",
+        "Thí sinh trả lời từ câu 23 đến câu 28. Thí sinh tính toán và ghi kết quả vào phiếu trả lời.",
     },
   },
 } as const;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PART I QUESTIONS (Q1–Q18)
-// ─────────────────────────────────────────────────────────────────────────────
 
 const partIQuestions: readonly MultipleChoiceQuestion[] = [
   {
@@ -290,18 +282,22 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     part: EExamPart.I,
     label: "Câu 13.",
     type: "multiple_choice",
-    stem: "Fe tác dụng với HCl loãng dư, muối thu được là",
-    difficulty: EDifficultyLevel.THONG_HIEU,
+    stem: "Cho 15,2 gam hỗn hợp X gồm Cu và kim loại M (hoá trị II không đổi) tác dụng với dung dịch HCl dư thu được 2,479 lít khí H₂ (đkc). Mặt khác, nếu cho 15,2 gam X tác dụng với dung dịch HNO₃ loãng dư thì thu được 4,958 lít khí NO (sản phẩm khử duy nhất, đkc). Kim loại M là",
+    difficulty: EDifficultyLevel.VAN_DUNG_CAO,
     domain: EKnowledgeDomain.KIM_LOAI,
     isApplied: false,
     options: [
-      { label: "A", text: "FeCl₃" },
-      { label: "B", text: "FeCl₂" },
-      { label: "C", text: "Fe₂(SO₄)₃" },
-      { label: "D", text: "FeCl₂ và FeCl₃" },
+      { label: "A", text: "Mg" },
+      { label: "B", text: "Zn" },
+      { label: "C", text: "Fe" },
+      { label: "D", text: "Ca" },
     ] as const,
-    correctAnswer: "B",
-    explanation: "Fe + 2HCl → FeCl₂ + H₂↑. HCl chỉ oxi hoá Fe lên +2.",
+    correctAnswer: "A",
+    explanation:
+      "n(H₂) = 2,479/24,79 = 0,1 mol; n(NO) = 4,958/24,79 = 0,2 mol. " +
+      "Cu không pư HCl → n(M) = n(H₂) = 0,1 mol. " +
+      "Bảo toàn e với HNO₃: 2n(M) + 2n(Cu) = 3n(NO) → 0,2 + 2n(Cu) = 0,6 → n(Cu) = 0,2 mol. " +
+      "m(X) = 0,1·M + 0,2·64 = 15,2 → M = 24 → Mg.",
   },
   {
     id: "P1_Q14",
@@ -328,18 +324,19 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     part: EExamPart.I,
     label: "Câu 15.",
     type: "multiple_choice",
-    stem: "Cấu hình electron 1s² 2s² 2p⁶ 3s² 3p¹ ứng với nguyên tố",
-    difficulty: EDifficultyLevel.NHAN_BIET,
+    stem: "Hợp chất ion M₂X có tổng số hạt cơ bản là 140. Trong đó, số hạt mang điện nhiều hơn số hạt không mang điện là 44. Số khối của ion M⁺ lớn hơn số khối của ion X²⁻ là 23. Tổng số hạt trong ion M⁺ nhiều hơn trong ion X²⁻ là 31. Cấu hình electron của ion X²⁻ là",
+    difficulty: EDifficultyLevel.VAN_DUNG_CAO,
     domain: EKnowledgeDomain.CAU_TAO_NGUYEN_TU,
     isApplied: false,
     options: [
-      { label: "A", text: "Na" },
-      { label: "B", text: "Mg" },
-      { label: "C", text: "Al" },
-      { label: "D", text: "Si" },
+      { label: "A", text: "1s² 2s² 2p⁶" },
+      { label: "B", text: "1s² 2s² 2p⁶ 3s² 3p⁶" },
+      { label: "C", text: "1s² 2s² 2p⁶ 3s² 3p⁶ 4s²" },
+      { label: "D", text: "1s² 2s² 2p⁶ 3s²" },
     ] as const,
-    correctAnswer: "C",
-    explanation: "Tổng e = 13 → Z = 13 → Al.",
+    correctAnswer: "A",
+    explanation:
+      "Giải hệ phương trình hạt: 2(2Z_M + N_M) + (2Z_X + N_X) = 140; (4Z_M + 2Z_X) - (2N_M + N_X) = 44; (Z_M + N_M) - (Z_X + N_X) = 23; (2Z_M + N_M - 1) - (2Z_X + N_X + 2) = 31. Tìm được Z_X = 8 (O), Z_M = 19 (K). Ion X²⁻ là O²⁻ có 10e, cấu hình: 1s² 2s² 2p⁶.",
   },
   {
     id: "P1_Q16",
@@ -401,16 +398,12 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
   },
 ] as const;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PART II QUESTIONS (Q19–Q22)
-// ─────────────────────────────────────────────────────────────────────────────
-
 const partIIQuestions: readonly TrueFalseQuestion[] = [
   {
     id: "P2_Q19",
     questionNumber: 19,
     part: EExamPart.II,
-    label: "Câu 1.",
+    label: "Câu 19.",
     type: "true_false",
     stem: "Điện phân dung dịch CuSO₄ bằng điện cực trơ, I = 5A. Xét các phát biểu:",
     context: "Điện phân dd CuSO₄, điện cực trơ. F = 96500 C/mol.",
@@ -449,7 +442,7 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
     id: "P2_Q20",
     questionNumber: 20,
     part: EExamPart.II,
-    label: "Câu 2.",
+    label: "Câu 20.",
     type: "true_false",
     stem: "Cho este X: CH₃COOC₂H₅ (ethyl acetate). Xét các phát biểu:",
     context: "CH₃COOC₂H₅, CTPT C₄H₈O₂, M = 88.",
@@ -487,7 +480,7 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
     id: "P2_Q21",
     questionNumber: 21,
     part: EExamPart.II,
-    label: "Câu 3.",
+    label: "Câu 21.",
     type: "true_false",
     stem: "Xét các phát biểu về hợp chất của sắt:",
     context: "Fe: số oxi hoá +2, +3. Quặng: hematite Fe₂O₃, magnetite Fe₃O₄.",
@@ -525,7 +518,7 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
     id: "P2_Q22",
     questionNumber: 22,
     part: EExamPart.II,
-    label: "Câu 4.",
+    label: "Câu 22.",
     type: "true_false",
     stem: "Xét các phát biểu về amine, amino acid và protein:",
     context: "Amine, amino acid (–NH₂ + –COOH), peptide, protein.",
@@ -562,22 +555,18 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
   },
 ] as const;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PART III QUESTIONS (Q23–Q28)
-// ─────────────────────────────────────────────────────────────────────────────
-
 const partIIIQuestions: readonly ShortAnswerQuestion[] = [
   {
     id: "P3_Q23",
     questionNumber: 23,
     part: EExamPart.III,
-    label: "Câu 1.",
+    label: "Câu 23.",
     type: "short_answer",
     stem: "Thuỷ phân 8,8 g este X (C₄H₈O₂) trong NaOH vừa đủ, thu 6,8 g muối. M(muối) = ?",
     difficulty: EDifficultyLevel.VAN_DUNG,
     domain: EKnowledgeDomain.ESTE_LIPIT,
     isApplied: false,
-    acceptedAnswers: ["68"],
+    acceptedAnswers: ["68", "68,0", "68.0"],
     solutionSteps: [
       "M(X) = 88. n(X) = 8,8/88 = 0,1 mol.",
       "n(muối) = 0,1 mol. M(muối) = 6,8/0,1 = 68.",
@@ -588,7 +577,7 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     id: "P3_Q24",
     questionNumber: 24,
     part: EExamPart.III,
-    label: "Câu 2.",
+    label: "Câu 24.",
     type: "short_answer",
     stem: "5,4 g Al + HCl dư. V(H₂) ở đkc (V_mol = 24,79 L/mol)? (làm tròn 2 chữ số thập phân)",
     difficulty: EDifficultyLevel.VAN_DUNG,
@@ -605,7 +594,7 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     id: "P3_Q25",
     questionNumber: 25,
     part: EExamPart.III,
-    label: "Câu 3.",
+    label: "Câu 25.",
     type: "short_answer",
     stem: "Đốt cháy 4,5 g amine X (no, đơn chức, mạch hở). Dẫn toàn bộ sản phẩm qua bình đựng NaOH dư, thấy khối lượng bình tăng 15,1 g. Số nguyên tử Carbon trong phân tử X là bao nhiêu?",
     difficulty: EDifficultyLevel.VAN_DUNG_CAO,
@@ -624,7 +613,7 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     id: "P3_Q26",
     questionNumber: 26,
     part: EExamPart.III,
-    label: "Câu 4.",
+    label: "Câu 26.",
     type: "short_answer",
     stem: "Gang chứa 4% C. Luyện 5 tấn gang, C → CO₂. V(CO₂) ở đkc (m³)? (làm tròn 2 số thập phân)",
     difficulty: EDifficultyLevel.VAN_DUNG,
@@ -641,7 +630,7 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     id: "P3_Q27",
     questionNumber: 27,
     part: EExamPart.III,
-    label: "Câu 5.",
+    label: "Câu 27.",
     type: "short_answer",
     stem: "11,2 g Fe + 6,4 g Cu vào HCl dư. Tổng khối lượng muối?",
     difficulty: EDifficultyLevel.VAN_DUNG,
@@ -658,7 +647,7 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     id: "P3_Q28",
     questionNumber: 28,
     part: EExamPart.III,
-    label: "Câu 6.",
+    label: "Câu 28.",
     type: "short_answer",
     stem: "Điện phân 5,85 g NaCl (dd, điện cực trơ, màng ngăn). I = 2A, t = 4825 s, H = 100%. m(NaOH) = ?",
     difficulty: EDifficultyLevel.VAN_DUNG,

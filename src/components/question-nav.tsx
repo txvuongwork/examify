@@ -4,15 +4,13 @@ import type { ExamQuestion } from "@/types";
 import { EExamPart } from "@/enums";
 import type { FunctionComponent } from "react";
 import { useFormContext } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { ROUTES } from "@/config";
-
 interface QuestionNavProps {
   questions: readonly ExamQuestion[];
   isSubmitted: boolean;
   title: string;
   onSubmit: () => void;
   onReset: () => void;
+  onBack: () => void;
 }
 
 const PART_GROUPS = [
@@ -32,10 +30,9 @@ export const QuestionNav: FunctionComponent<QuestionNavProps> = ({
   isSubmitted,
   onSubmit,
   onReset,
+  onBack,
   title,
 }) => {
-  const navigate = useNavigate();
-
   const {
     watch,
     formState: { errors },
@@ -96,7 +93,7 @@ export const QuestionNav: FunctionComponent<QuestionNavProps> = ({
           type="button"
           variant="outline"
           className="w-full"
-          onClick={() => navigate(ROUTES.HOME)}
+          onClick={onBack}
         >
           Quay lại
         </Button>

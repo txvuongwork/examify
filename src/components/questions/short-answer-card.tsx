@@ -2,6 +2,7 @@ import { cn } from "@/lib";
 import type { ShortAnswerQuestion } from "@/types";
 import type { FunctionComponent } from "react";
 import { useFormContext } from "react-hook-form";
+import { QuestionBadges } from "./question-badges";
 
 interface ShortAnswerCardProps {
   question: ShortAnswerQuestion;
@@ -37,6 +38,13 @@ export const ShortAnswerCard: FunctionComponent<ShortAnswerCardProps> = ({
       <p className="text-lg font-bold text-zinc-900">
         {question.label} {question.stem}
       </p>
+
+      {isSubmitted && (
+        <QuestionBadges
+          difficulty={question.difficulty}
+          domain={question.domain}
+        />
+      )}
 
       <div className="">
         <input

@@ -2,6 +2,7 @@ import { cn } from "@/lib";
 import type { MultipleChoiceQuestion, OptionLabel } from "@/types";
 import type { FunctionComponent } from "react";
 import { useFormContext } from "react-hook-form";
+import { QuestionBadges } from "./question-badges";
 
 interface MultipleChoiceCardProps {
   question: MultipleChoiceQuestion;
@@ -31,6 +32,13 @@ export const MultipleChoiceCard: FunctionComponent<MultipleChoiceCardProps> = ({
       <p className="text-lg font-bold text-zinc-900">
         {question.label} {question.stem}
       </p>
+
+      {isSubmitted && (
+        <QuestionBadges
+          difficulty={question.difficulty}
+          domain={question.domain}
+        />
+      )}
 
       <div className="flex flex-col gap-2">
         {question.options.map((opt) => {

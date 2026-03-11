@@ -3,6 +3,7 @@ import type { TrueFalseAnswerValue } from "@/schemas";
 import type { TrueFalseLabel, TrueFalseQuestion } from "@/types";
 import type { FunctionComponent } from "react";
 import { useFormContext } from "react-hook-form";
+import { QuestionBadges } from "./question-badges";
 
 interface TrueFalseCardProps {
   question: TrueFalseQuestion;
@@ -32,6 +33,13 @@ export const TrueFalseCard: FunctionComponent<TrueFalseCardProps> = ({
       <p className="text-lg font-bold text-zinc-900">
         {question.label} {question.stem}
       </p>
+
+      {isSubmitted && (
+        <QuestionBadges
+          difficulty={question.difficulty}
+          domain={question.domain}
+        />
+      )}
 
       <p className="rounded-md bg-gray-100 p-3 text-sm italic text-zinc-600 border border-gray-200 border-l-[3px] border-l-gray-300">
         {question.context}

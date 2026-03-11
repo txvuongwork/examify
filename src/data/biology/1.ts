@@ -107,12 +107,12 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     domain: EKnowledgeDomain.CO_CHE_DI_TRUYEN_PHAN_TU,
     isApplied: false,
     options: [
-      { label: "A", text: "ADN polymerase" },
+      { label: "A", text: "Helicase" },
       { label: "B", text: "Ligase" },
-      { label: "C", text: "Helicase" },
+      { label: "C", text: "ADN polymerase" },
       { label: "D", text: "Primase" },
     ] as const,
-    correctAnswer: "C",
+    correctAnswer: "A",
     explanation:
       "Helicase (enzyme tháo xoắn) phá vỡ liên kết hydro giữa hai mạch ADN. " +
       "ADN polymerase tổng hợp mạch mới; Ligase nối đoạn Okazaki; Primase tổng hợp đoạn mồi RNA.",
@@ -241,14 +241,14 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
       { label: "B", text: "Thay đổi số lượng nhiễm sắc thể trong tế bào" },
       {
         label: "C",
-        text: "Biến đổi cấu trúc gen liên quan đến một hoặc một số cặp nucleotide",
+        text: "Thay đổi kiểu hình do tác động môi trường, không liên quan đến kiểu gen",
       },
       {
         label: "D",
-        text: "Thay đổi kiểu hình do tác động môi trường, không liên quan đến kiểu gen",
+        text: "Biến đổi cấu trúc gen liên quan đến một hoặc một số cặp nucleotide",
       },
     ] as const,
-    correctAnswer: "C",
+    correctAnswer: "D",
     explanation:
       "Đột biến gen (đột biến điểm) là biến đổi trong cấu trúc gen tại một hoặc vài nucleotide " +
       "(thêm, mất, thay thế cặp nucleotide). " +
@@ -290,16 +290,16 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     domain: EKnowledgeDomain.DI_TRUYEN_QUAN_THE,
     isApplied: false,
     options: [
-      { label: "A", text: "Quần thể có kích thước nhỏ" },
+      { label: "A", text: "Giao phối ngẫu nhiên, không có chọn lọc tự nhiên" },
       { label: "B", text: "Có sự di – nhập gen thường xuyên" },
-      { label: "C", text: "Giao phối ngẫu nhiên, không có chọn lọc tự nhiên" },
+      { label: "C", text: "Quần thể có kích thước nhỏ" },
       { label: "D", text: "Tần số đột biến gen cao" },
     ] as const,
-    correctAnswer: "C",
+    correctAnswer: "A",
     explanation:
       "Định luật Hardy–Weinberg đòi hỏi: quần thể lớn vô hạn, giao phối ngẫu nhiên, " +
       "không đột biến, không di–nhập gen, không chọn lọc tự nhiên. " +
-      "Đáp án C nêu hai trong số các điều kiện quan trọng nhất; A, B, D vi phạm điều kiện.",
+      "Đáp án A nêu hai trong số các điều kiện quan trọng nhất; B, C, D vi phạm điều kiện.",
   },
   {
     id: "P1_Q12",
@@ -335,10 +335,10 @@ const partIQuestions: readonly MultipleChoiceQuestion[] = [
     options: [
       { label: "A", text: "Chọn lọc tự nhiên" },
       { label: "B", text: "Di – nhập gen" },
-      { label: "C", text: "Đột biến" },
-      { label: "D", text: "Giao phối không ngẫu nhiên" },
+      { label: "C", text: "Giao phối không ngẫu nhiên" },
+      { label: "D", text: "Đột biến" },
     ] as const,
-    correctAnswer: "C",
+    correctAnswer: "D",
     explanation:
       "Đột biến tạo ra các alen mới, là nguyên liệu sơ cấp của tiến hóa. " +
       "Giao phối tạo nguyên liệu thứ cấp (biến dị tổ hợp). " +
@@ -666,12 +666,10 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
       {
         label: "c",
         statement:
-          "Glucagon được tiết bởi tế bào α của tuyến tụy khi glucose máu giảm, " +
-          "kích thích phân giải glycogen ở gan để tăng glucose máu.",
-        isTrue: true,
+          "Glucagon được tiết bởi tế bào α của tuyến tụy khi glucose máu tăng, kích thích tổng hợp glycogen ở gan để giảm glucose máu.",
+        isTrue: false,
         explanation:
-          "Khi đói, glucose máu giảm → tế bào α tiết glucagon → " +
-          "kích hoạt glycogen phosphorylase ở gan → phân giải glycogen → glucose vào máu. ✓",
+          "Glucagon được tiết ra khi glucose máu GIẢM, kích thích PHÂN GIẢI glycogen ở gan để đưa glucose vào máu. Insulin mới làm nhiệm vụ kích thích tổng hợp glycogen khi đường huyết tăng.",
       },
       {
         label: "d",
@@ -718,7 +716,7 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     part: EExamPart.III,
     label: "Câu 24.",
     type: "short_answer",
-    stem: "Một phân tử mARN có 900 nucleotide. Biết rằng mã kết thúc không mã hóa axit amin, mã mở đầu AUG mã hóa axit amin Met. Chuỗi polypeptide được tổng hợp từ mARN này có bao nhiêu axit amin?",
+    stem: "Một phân tử mARN có 900 nucleotide. Biết rằng mã kết thúc không mã hóa axit amin, mã mở đầu AUG mã hóa axit amin Met. Chuỗi polypeptide sơ cấp (mới được tổng hợp, chưa cắt bỏ axit amin mở đầu) có bao nhiêu axit amin?",
     difficulty: EDifficultyLevel.VAN_DUNG,
     domain: EKnowledgeDomain.CO_CHE_DI_TRUYEN_PHAN_TU,
     isApplied: false,
@@ -729,7 +727,9 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
       "Mã mở đầu AUG mã hóa Met → được tính là 1 axit amin.",
       "Số axit amin = 300 – 1 = 299.",
     ],
-    conclusion: "Chuỗi polypeptide gồm 299 axit amin.",
+    conclusion:
+      "Chuỗi polypeptide sơ cấp gồm 299 axit amin (bao gồm Met ở đầu). " +
+      "Lưu ý: chuỗi polypeptide hoàn chỉnh sau khi cắt Met mở đầu còn 298 axit amin.",
   },
   {
     id: "P3_Q25",
@@ -801,18 +801,20 @@ const partIIIQuestions: readonly ShortAnswerQuestion[] = [
     part: EExamPart.III,
     label: "Câu 28.",
     type: "short_answer",
-    stem: "Một quần thể vi khuẩn E. coli có thời gian thế hệ là 20 phút (cứ 20 phút số tế bào tăng gấp đôi). Bắt đầu từ 100 tế bào, sau 1 giờ 40 phút, quần thể có bao nhiêu tế bào? (Giả sử điều kiện môi trường lý tưởng, không có tế bào chết.)",
-    difficulty: EDifficultyLevel.VAN_DUNG,
+    stem: "Một quần thể động vật hoang dã ban đầu có 500 cá thể. Theo thống kê sinh thái, mỗi năm quần thể có tỉ lệ sinh tự nhiên là 15% và tỉ lệ tử vong là 5%. Tuy nhiên, do nạn săn trộm, mỗi năm quần thể bị mất đi 10 cá thể ngay vào đầu năm (trước khi bước vào mùa sinh sản). Tính kích thước của quần thể này sau 2 năm (làm tròn đến số nguyên cá thể gần nhất).",
+    difficulty: EDifficultyLevel.VAN_DUNG_CAO,
     domain: EKnowledgeDomain.SINH_THAI_HOC,
     isApplied: true,
-    acceptedAnswers: ["3200"],
+    acceptedAnswers: ["582", "581"],
     solutionSteps: [
-      "Thời gian = 1 giờ 40 phút = 100 phút.",
-      "Số thế hệ n = thời gian / thời gian thế hệ = 100 / 20 = 5 thế hệ.",
-      "Công thức tăng trưởng theo lũy thừa: N = N₀ × 2ⁿ.",
-      "N = 100 × 2⁵ = 100 × 32 = 3200 tế bào.",
+      "Tỉ lệ tăng trưởng tự nhiên của quần thể: r = b - d = 15% - 5% = 10% = 0,1.",
+      "Kích thước quần thể ở năm thứ nhất (N1): Đầu năm bị săn trộm 10 cá thể nên số lượng tham gia sinh sản là 500 - 10 = 490 cá thể.",
+      "Cuối năm thứ nhất: N1 = 490 × (1 + 0,1) = 539 cá thể.",
+      "Kích thước quần thể ở năm thứ hai (N2): Đầu năm lại bị mất 10 cá thể, số lượng tham gia sinh sản là 539 - 10 = 529 cá thể.",
+      "Cuối năm thứ hai: N2 = 529 × (1 + 0,1) = 581,9 cá thể.",
+      "Làm tròn đến số nguyên gần nhất ta được 582 cá thể.",
     ],
-    conclusion: "Sau 1 giờ 40 phút, quần thể có 3200 tế bào vi khuẩn.",
+    conclusion: "Sau 2 năm, kích thước quần thể là 582 cá thể.",
   },
 ] as const;
 

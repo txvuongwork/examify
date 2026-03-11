@@ -5,16 +5,9 @@ import {
   TrueFalseCard,
 } from "@/components/questions";
 import { Button } from "@/components/ui";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { BackConfirmDialog } from "./components/back-confirm-dialog";
+import { SubmitConfirmDialog } from "./components/submit-confirm-dialog";
+import { ROUTES } from "@/config";
 import { EXAM_MAP } from "@/data";
 import { EExamPart, EExamSubject } from "@/enums";
 import { isQuestionAnswered } from "@/lib";
@@ -25,15 +18,17 @@ import { getQuestionsByPart } from "@/utils/exam";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type FunctionComponent, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 interface ExamFormProps {
   exam: Exam;
 }
 
 const ExamForm: FunctionComponent<ExamFormProps> = ({ exam }) => {
+  const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showBackDialog, setShowBackDialog] = useState(false);
   const [unansweredCount, setUnansweredCount] = useState(0);
 
   const schema = useMemo(() => createExamFormSchema(exam), [exam]);
@@ -66,6 +61,15 @@ const ExamForm: FunctionComponent<ExamFormProps> = ({ exam }) => {
   const handleReset = () => {
     form.reset();
     setIsSubmitted(false);
+  };
+
+  const handleBack = () => {
+    setShowBackDialog(true);
+  };
+
+  const handleConfirmBack = () => {
+    setShowBackDialog(false);
+    navigate(ROUTES.HOME);
   };
 
   const partI = getQuestionsByPart(exam, EExamPart.I);
@@ -158,6 +162,7 @@ const ExamForm: FunctionComponent<ExamFormProps> = ({ exam }) => {
                   isSubmitted={isSubmitted}
                   onSubmit={handleSubmit}
                   onReset={handleReset}
+                  onBack={handleBack}
                   title={exam.metadata.title}
                 />
               </div>
@@ -166,23 +171,18 @@ const ExamForm: FunctionComponent<ExamFormProps> = ({ exam }) => {
         </form>
       </FormProvider>
 
-      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <AlertDialogContent size="sm">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Xác nhận nộp bài</AlertDialogTitle>
-            <AlertDialogDescription>
-              Bạn còn {unansweredCount} câu chưa trả lời. Bạn có chắc chắn muốn
-              nộp bài?
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Quay lại</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmSubmit}>
-              Nộp bài
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <SubmitConfirmDialog
+        open={showConfirmDialog}
+        onOpenChange={setShowConfirmDialog}
+        unansweredCount={unansweredCount}
+        onConfirm={handleConfirmSubmit}
+      />
+
+      <BackConfirmDialog
+        open={showBackDialog}
+        onOpenChange={setShowBackDialog}
+        onConfirm={handleConfirmBack}
+      />
     </div>
   );
 };
