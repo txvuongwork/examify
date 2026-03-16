@@ -12,10 +12,6 @@ import type {
   TrueFalseQuestion,
 } from "@/types";
 
-// =============================================================================
-// DATA
-// =============================================================================
-
 const EXAM_METADATA: ExamMetadata = {
   title: "Đề thi thử môn sinh học - Đề số 1",
   subject: EExamSubject.BIOLOGY,
@@ -44,10 +40,6 @@ const EXAM_METADATA: ExamMetadata = {
     },
   },
 } as const;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PART I QUESTIONS (Q1–Q18)
-// ─────────────────────────────────────────────────────────────────────────────
 
 const partIQuestions: readonly MultipleChoiceQuestion[] = [
   {
@@ -684,10 +676,6 @@ const partIIQuestions: readonly TrueFalseQuestion[] = [
     ] as const,
   },
 ] as const;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PART III QUESTIONS (Q23–Q28)
-// ─────────────────────────────────────────────────────────────────────────────
 
 const partIIIQuestions: readonly ShortAnswerQuestion[] = [
   {
